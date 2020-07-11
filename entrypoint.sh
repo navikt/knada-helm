@@ -10,10 +10,10 @@ do
     file=$(cat /mustache/shared.yaml "$file_path" | decrypt)
     echo "$file" | mustache - /mustache/template.mustache > "/out/$base_file"
 
-    if [ -z "${RELEASE_NAME}" ]; then
+    if [ -z "$RELEASE_NAME" ]; then
 	release="jupyterhub-$(yq r "$file_path" ingress)"
     else
-	release="$(RELEASE_NAME)"
+	release="$RELEASE_NAME"
     fi
 
     namespace=$(yq r "$file_path" namespace)
