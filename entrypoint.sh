@@ -19,6 +19,12 @@ do
     namespace=$(yq r "$file_path" namespace)
     echo "Installing ${release} in ${namespace}"
 
+    kubectl get namespace "$namespace"
+    if [ $? -eq 0 ]; then
+	echo "Creating missing namespace ${namespace}"
+	kubectl create namespace "$namespace"
+    fi
+
     helm upgrade --install "$release" "/${CHART}.tgz" \
 	 --namespace "$namespace" \
 	 --values "/out/$base_file"
