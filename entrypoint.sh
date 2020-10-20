@@ -20,7 +20,7 @@ do
     echo "Installing ${release} in ${namespace}"
 
     kubectl get namespace "$namespace"
-    if [ $? -eq 0 ]; then
+    if [ $? -ne 0 ]; then
 	echo "Creating missing namespace ${namespace}"
 	kubectl create namespace "$namespace"
     fi
